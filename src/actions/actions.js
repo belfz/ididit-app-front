@@ -44,7 +44,7 @@ export function login (credentials) {
 
 export function getUser () {
     return dispatch => {
-        return axios.get('http://localhost:3471/api/restricted')
+        return axios.get('http://localhost:3470/api/restricted')
             .then(({data}) => {
                 dispatch(loginSuccess({first_name: data.first_name, last_name: data.last_name}));
             })

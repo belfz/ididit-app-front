@@ -16,7 +16,7 @@ class Login extends React.Component {
         this.setState({});
         
         this.dispatch(login({
-            username: this.refs.username.value,
+            email: this.refs.email.value,
             password: this.refs.password.value
         }))
         .then(() => {
@@ -41,8 +41,8 @@ class Login extends React.Component {
     
     render () {
         return (
-          <form onSubmit={this.handleSubmit}>
-            <input type="text" ref="username" placeholder="username" />
+          <form onSubmit={this.handleSubmit} noValidate>
+            <input type="email" ref="email" placeholder="email" />
             <input type="password" ref="password" placeholder="password" />
             <button type="submit">login</button>
             {this.state.error && <p>{this.state.error}</p>}

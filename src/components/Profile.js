@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Achievements from './Achievements';
 
-const Profile = ({dispatch, profile = {}, isAuthenticated}) => {
+const Profile = ({dispatch, profile = {achievements: []}}) => {
+    console.log('profile:', profile);
     return (
         <div>
-        Profile: {profile.first_name}, {profile.last_name}
+            <p>Profile: {profile.email}</p>
+            {profile.achievements && <Achievements list={profile.achievements} />}
         </div>    
     );
 };
 
 export default connect((state) => ({
-    profile: state.authReducer.profile,
-    isAuthenticated: state.authReducer.isAuthenticated
+    profile: state.authReducer.profile
 }))(Profile);

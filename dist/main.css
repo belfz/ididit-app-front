@@ -1,0 +1,14 @@
+.lists {
+    display: flex;
+}
+
+.catlist {
+    width: 100px;
+    margin-left: 20px;
+}
+
+.catlist p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -27,7 +27,7 @@ class Login extends React.Component {
                 });
             } else {
                 this.props.history.replace({
-                    pathname: 'profile'
+                    pathname: '/profile'
                 });
             }
         })

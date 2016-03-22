@@ -1,7 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var PROD = JSON.parse(process.env.PROD_DEV || "0");
-// var deps = require('./package.json').dependencies;
 
 module.exports = {
   entry: {
@@ -15,7 +14,8 @@ module.exports = {
   },
   devServer: {
     inline: true,
-    contentBase: './dist'
+    contentBase: './dist',
+    historyApiFallback: true
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({

@@ -2,6 +2,11 @@ import axios from 'axios';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
+//move this to axios configuration. use for refresh token.
+// axios.interceptors.response.use(() => {}, (err) => {
+//     console.log('err', err);
+// });
+
 export const requestLogin = (credentials) => ({
    type: 'LOGIN_REQUEST',
    credentials 

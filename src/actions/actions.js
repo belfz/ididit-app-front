@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
 
 //move this to axios configuration. use for refresh token.
 // axios.interceptors.response.use(() => {}, (err) => {

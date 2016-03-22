@@ -5,7 +5,7 @@ const Achievements = ({list}) => {
         <ul>
             {list.map(a => {
               return (
-                  <li key={a.title}>
+                  <li key={a.__id}>
                     <div>
                       <h4>{a.title}</h4>
                       <p>{a.content}</p>

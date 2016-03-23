@@ -1,5 +1,6 @@
-import expect from 'expect' 
-import { requestLogin } from '../../src/actions/actions';
+import expect from 'expect';
+import sinon from 'sinon';
+import { requestLogin, logout } from '../../src/actions/actions';
 
 describe('actions', () => {
    it('requestLogin should create a LOGIN_REQUEST action', () => {
@@ -8,5 +9,11 @@ describe('actions', () => {
             type: 'LOGIN_REQUEST',
             credentials: {username: 'john@doe.com', password: 'meh123'}
         });
-   }); 
+   });
+   
+   it('should removeItem from localStorage on logout', () => {
+      let spy = sinon.spy(window.localStorage, 'removeItem');
+      logout();
+      expect(spy.calledWith('token')).toBe(true); 
+   });
 });

@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var PROD = JSON.parse(process.env.PROD_DEV || "0");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
@@ -25,7 +27,8 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin('commons.chunk.js'),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin('styles.css')
   ],
 
   module: {
@@ -37,7 +40,14 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
+      },
+      {
+        test: /\.scss/,
+        loader: ExtractTextPlugin.extract('style-loader', ['css-loader', 'sass-loader', 'postcss-loader'])
       }
     ]
-  }
+  },
+  postcss: function () {
+        return [autoprefixer({browsers: ['last 2 versions']})];
+    }
 };

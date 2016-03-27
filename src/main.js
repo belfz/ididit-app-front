@@ -5,7 +5,7 @@ import { addCat } from './actions/actions';
 
 import Root, {store} from './routes/routes';
 
-require('!style!css!sass!postcss!./styles/styles.scss');
+require('./styles/styles.scss');
 
 render(
     <Provider store={store}>

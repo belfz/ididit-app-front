@@ -30,6 +30,23 @@ export const logout = () => {
     };
 };
 
+export const achievementsFetchSuccess = (achievements) => ({
+    type: 'ACHIEVEMENTS_FETCH_SUCCESS',
+    achievements
+});
+
+export const achievementsShowDone = () => ({
+    type: 'ACHIEVEMENTS_FILTER_SHOW_DONE'
+});
+
+export const achievementsShowUndone = () => ({
+    type: 'ACHIEVEMENTS_FILTER_SHOW_UNDONE'
+});
+
+export const achievementsShowAll = () => ({
+    type: 'ACHIEVEMENTS_FILTER_SHOW_ALL'
+});
+
 export function login (credentials) {
     return dispatch => {
         dispatch(requestLogin(credentials));
@@ -49,10 +66,24 @@ export function login (credentials) {
 
 export function getUser () {
     return dispatch => {
-        return axios.get('http://localhost:3470/api/restricted')
+        return axios.get('http://localhost:3470/api/profile')
             .then(({data}) => {
                 console.log('got user');
-                dispatch(loginSuccess({email: data.email, achievements: data.achievements}));
+                dispatch(loginSuccess({email: data.email}));
+            })
+            .catch(({status, statusText, data}) => {
+                dispatch(loginError(`${status} (${statusText}): ${data}`));
+                throw data;
+            });
+    }
+}
+
+export function getAchievements () {
+    return dispatch => {
+        return axios.get('http://localhost:3470/api/achievements')
+            .then(({data}) => {
+                console.log('got achievements:', data);
+                dispatch(achievementsFetchSuccess(data.achievements));
             })
             .catch(({status, statusText, data}) => {
                 dispatch(loginError(`${status} (${statusText}): ${data}`));

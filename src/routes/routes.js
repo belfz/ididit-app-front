@@ -5,13 +5,14 @@ import configureStore from '../store/configureStore';
 import App from '../containers/App';
 import Login from '../components/Login';
 import Profile from '../components/Profile';
-import { logout, getUser } from '../actions/actions';
+import Achievements from '../components/Achievements';
+import { logout, getUser, getAchievements } from '../actions/actions';
 
 
 export const store = configureStore();
 
-function requireAuth (nextState, replace, done) {
-    store.dispatch(getUser())
+function requireAuth (action, nextState, replace, done) {
+    store.dispatch(action())
     .then(() => done())
     .catch(() => {
         browserHistory.replace({
@@ -31,14 +32,20 @@ class Root extends React.Component {
         return (
             <Router history={browserHistory}>
                 <Route path="/" component={App}>
-                    <IndexRoute component={Profile} onEnter={requireAuth}/>
+                    <IndexRoute component={Profile} onEnter={requireAuth.bind(null, getUser)}/>
                     <Route path="/login" component={Login} />
                     <Route path="/logout" onEnter={doLogout} />
-                    <Route path="/profile" component={Profile} onEnter={requireAuth}/>
+                    <Route path="/profile" component={Profile} onEnter={requireAuth.bind(null, getUser)}/>
+                    <Route path="/achievements" component={Achievements} onEnter={requireAuth.bind(null, getAchievements)}/>
                 </Route>
             </Router>        
         ); 
     }
 }
+//profile | achievements | statistics
+//       (new)(done)(undone)
+//          \       \_____\update, timeline
+//           \
+//            \_unit
 
 export default Root;

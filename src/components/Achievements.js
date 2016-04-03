@@ -1,20 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {store} from '../routes/routes';
+import {achievementsShowDone, achievementsShowUndone, achievementsShowAll} from '../actions/actions';
+import AchievementsList from './AchievementsList';
 
-const Achievements = ({list}) => {
-    return (
-        <ul>
-            {list.map(a => {
-              return (
-                  <li key={a.__id}>
-                    <div>
-                      <h4>{a.title}</h4>
-                      <p>{a.content}</p>
-                    </div>    
-                  </li>
-              );  
-            })}
-        </ul>
-    );
+function getAll () {
+    store.dispatch(achievementsShowAll());
 }
 
-export default Achievements;
+function getDone () {
+    store.dispatch(achievementsShowDone());
+}
+
+function getUndone () {
+    store.dispatch(achievementsShowUndone());
+}
+
+const Achievements = ({dispatch, achievements, done}) => {
+    return (
+        <div>
+            <p>achievements - todo</p>
+            <button onClick={getAll}>show all</button>
+            <button onClick={getDone}>show done</button>
+            <button onClick={getUndone}>show undone</button>
+            <AchievementsList list={achievements.filter(a => {
+                return done === undefined ? true : a.done === done;
+            })} />
+        </div>);
+};
+
+export default connect((state) => ({
+    achievements: state.achievementsReducer.achievements,
+    done: state.achievementsReducer.done
+}))(Achievements);

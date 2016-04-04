@@ -20,9 +20,9 @@ const Achievements = ({dispatch, achievements, done}) => {
     return (
         <div>
             <p>achievements - todo</p>
-            <button onClick={getAll}>show all</button>
-            <button onClick={getDone}>show done</button>
-            <button onClick={getUndone}>show undone</button>
+            <button className={done === undefined ? 'ach-btn-active' : ''} onClick={getAll}>show all</button>
+            <button className={done ? 'ach-btn-active' : ''} onClick={getDone}>show done</button>
+            <button className={done === false ? 'ach-btn-active' : ''} onClick={getUndone}>show undone</button>
             <AchievementsList list={achievements.filter(a => {
                 return done === undefined ? true : a.done === done;
             })} />

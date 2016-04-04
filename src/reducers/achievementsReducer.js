@@ -15,7 +15,14 @@ const achievementsReducer = (state = {}, action) => {
         case 'ACHIEVEMENTS_FILTER_SHOW_ALL':
             return Object.assign({}, state, {
                 done: undefined
-            });              
+            });
+        case 'ACHIEVEMENT_UPDATED':
+            return Object.assign({}, state, {achievements: state.achievements.map(achievement => {
+                if (achievement._id === action.achievement._id) {
+                    return Object.assign(achievement, action.achievement);
+                }
+                return achievement;
+            })});                  
         default:
             return state; 
     }

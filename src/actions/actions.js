@@ -47,6 +47,11 @@ export const achievementsShowAll = () => ({
     type: 'ACHIEVEMENTS_FILTER_SHOW_ALL'
 });
 
+export const achievementUpdated = (achievement) => ({
+    type: 'ACHIEVEMENT_UPDATED',
+    achievement
+})
+
 export function login (credentials) {
     return dispatch => {
         dispatch(requestLogin(credentials));
@@ -82,11 +87,25 @@ export function getAchievements () {
     return dispatch => {
         return axios.get('http://localhost:3470/api/achievements')
             .then(({data}) => {
-                console.log('got achievements:', data);
                 dispatch(achievementsFetchSuccess(data.achievements));
             })
             .catch(({status, statusText, data}) => {
-                dispatch(loginError(`${status} (${statusText}): ${data}`));
+                // TODO create getAchievements error
+                // dispatch(loginError(`${status} (${statusText}): ${data}`));
+                throw data;
+            });
+    }
+}
+
+export function updateAchievement (achievementId, updateData) {
+    return dispatch => {
+        return axios.put(`http://localhost:3470/api/achievements/${achievementId}`, updateData)
+            .then(({data}) => {
+                dispatch(achievementUpdated(data))
+            })
+            .catch(({status, statusText, data}) => {
+                // TODO create updateAchievement error
+                // dispatch(loginError(`${status} (${statusText}): ${data}`));
                 throw data;
             });
     }

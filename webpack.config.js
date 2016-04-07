@@ -8,7 +8,8 @@ module.exports = {
   entry: {
     main: './src/main.js'
   }, 
-  devtool: !PROD ? 'source-map' : undefined,
+  debug: true,
+  devtool: 'eval-source-map',
   output: {
     path: './dist',
     filename: 'bundle.min.js',

@@ -13,7 +13,8 @@ const Achievements = ({dispatch, achievements, done, getAll, getDone, getUndone,
             <AchievementsList list={achievements.filter(a => {
                 return done === undefined ? true : a.done === done;
             })} updateAchievement={updateAchievement} />
-        </div>);
+        </div>
+    );
 };
 
 export default connect(

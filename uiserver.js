@@ -6,7 +6,9 @@ const port = process.env.PORT || 8080;
 app.use(express.static(__dirname + '/dist'));
 
 app.get('*', function (req, res) {
-    res.sendfile(__dirname + '/dist/index.html');
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.listen(port);
+app.listen(port, function () {
+    console.log(`uiserver on port ${port}`);
+});

@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node uiserver.js",
-    "webpack": "webpack -w",
+    "start": "node uiserver.js & webpack -w",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js"
   },
   "author": "belfz",

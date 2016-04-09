@@ -28,7 +28,6 @@ module.exports = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin('commons.chunk.js'),
-    new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('styles.css')
   ],
 

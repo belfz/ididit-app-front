@@ -22,7 +22,11 @@ const achievementsReducer = (state = {}, action) => {
                     return Object.assign(achievement, action.achievement);
                 }
                 return achievement;
-            })});                  
+            })});
+        case 'ACHIEVEMENT_CREATED':
+            return Object.assign({}, state, {
+                achievements: state.achievements.slice().push(action.achievement)
+            });                      
         default:
             return state; 
     }

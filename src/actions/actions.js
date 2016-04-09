@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
 
@@ -50,7 +51,12 @@ export const achievementsShowAll = () => ({
 export const achievementUpdated = (achievement) => ({
     type: 'ACHIEVEMENT_UPDATED',
     achievement
-})
+});
+
+export const achievementCreated = (achievement) => ({
+    type: 'ACHIEVEMENT_CREATED',
+    achievement
+});
 
 export function login (credentials) {
     return dispatch => {
@@ -101,7 +107,22 @@ export function updateAchievement (achievementId, updateData) {
     return dispatch => {
         return axios.put(`http://localhost:3470/api/achievements/${achievementId}`, updateData)
             .then(({data}) => {
-                dispatch(achievementUpdated(data))
+                dispatch(achievementUpdated(data));
+            })
+            .catch(({status, statusText, data}) => {
+                // TODO create updateAchievement error
+                // dispatch(loginError(`${status} (${statusText}): ${data}`));
+                throw data;
+            });
+    }
+}
+
+export function createAchievement (newAchievement) {
+    return dispatch => {
+        return axios.post('http://localhost:3470/api/achievements/', newAchievement)
+            .then(({data}) => {
+                dispatch(achievementCreated(data));
+                browserHistory.push('/achievements');
             })
             .catch(({status, statusText, data}) => {
                 // TODO create updateAchievement error

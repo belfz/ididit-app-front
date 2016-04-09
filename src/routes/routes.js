@@ -6,6 +6,7 @@ import App from '../containers/App';
 import Login from '../components/Login';
 import Profile from '../components/Profile';
 import Achievements from '../components/Achievements';
+import NewAchievement from '../components/NewAchievement';
 import { logout, getUser, getAchievements } from '../actions/actions';
 
 
@@ -23,7 +24,7 @@ function requireAuth (action, nextState, replace, done) {
 }
 
 function doLogout (nextState, replace) {
-    store.dispatch(logout())
+    store.dispatch(logout());
     replace({pathname: '/login'});
 }
 
@@ -36,7 +37,8 @@ class Root extends React.Component {
                     <Route path="/login" component={Login} />
                     <Route path="/logout" onEnter={doLogout} />
                     <Route path="/profile" component={Profile} onEnter={requireAuth.bind(null, getUser)}/>
-                    <Route path="/achievements" component={Achievements} onEnter={requireAuth.bind(null, getAchievements)}/>
+                    <Route path="/achievements" component={Achievements} onEnter={requireAuth.bind(null, getAchievements)} />
+                    <Route path="/achievements/new" component={NewAchievement} onEnter={requireAuth.bind(null, getAchievements)} />
                 </Route>
             </Router>        
         ); 

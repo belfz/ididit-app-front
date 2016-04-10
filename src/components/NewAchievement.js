@@ -68,6 +68,8 @@ class NewAchievement extends React.Component {
     }
 }
 
+NewAchievement.propTypes = {createAchievement: React.PropTypes.func};
+
 export default connect(
     undefined,
     (dispatch) => ({

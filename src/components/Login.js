@@ -51,6 +51,8 @@ class Login extends React.Component {
     }
 }
 
+Login.propTypes = {login: React.PropTypes.func};
+
 export default connect(
     undefined,
     (dispatch) => ({

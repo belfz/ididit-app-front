@@ -6,7 +6,7 @@ import { login } from '../actions/actions';
 class Login extends React.Component {
     constructor (props) {
         super(props);
-        this.dispatch = this.props.dispatch;
+        this.login = this.props.login;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {};
     }
@@ -15,10 +15,10 @@ class Login extends React.Component {
         event.preventDefault();
         this.setState({});
         
-        this.dispatch(login({
+        this.login({
             email: this.refs.email.value,
             password: this.refs.password.value
-        }))
+        })
         .then(() => {
             const loc = this.props.location;
             if (loc.state && loc.state.nextPathname) {
@@ -51,4 +51,11 @@ class Login extends React.Component {
     }
 }
 
-export default connect()(Login);
+export default connect(
+    undefined,
+    (dispatch) => ({
+        login (credentials) {
+            return dispatch(login(credentials));
+        }
+    })
+)(Login);

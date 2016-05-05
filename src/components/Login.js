@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, browserHistory } from 'react-router';
+import authComponentSubmit from '../decorators/authComponentSubmit';
 import { connect } from 'react-redux';
 import { login } from '../actions/actions';
 
@@ -9,34 +9,6 @@ class Login extends React.Component {
         this.login = this.props.login;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {};
-    }
-    
-    handleSubmit (event) {
-        event.preventDefault();
-        this.setState({});
-        
-        this.login({
-            email: this.refs.email.value,
-            password: this.refs.password.value
-        })
-        .then(() => {
-            const loc = this.props.location;
-            if (loc.state && loc.state.nextPathname) {
-                browserHistory.replace({
-                    pathname: loc.state.nextPathname
-                });
-            } else {
-                browserHistory.replace({
-                    pathname: '/profile'
-                });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            this.setState({
-                error
-            });
-        });
     }
     
     render () {
@@ -60,4 +32,4 @@ export default connect(
             return dispatch(login(credentials));
         }
     })
-)(Login);
+)(authComponentSubmit(Login));

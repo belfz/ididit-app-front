@@ -1,11 +1,11 @@
 import { Router, browserHistory } from 'react-router';
 
 export default function authComponentSubmit (component) {
-  component.prototype.handleSubmit = function (event) {
+  component.prototype.handleSubmit = function (authAction, event) {
     event.preventDefault();
     this.setState({});
       
-    this.login({
+    authAction({
       email: this.refs.email.value,
       password: this.refs.password.value
     })

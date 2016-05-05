@@ -6,8 +6,7 @@ import { login } from '../actions/actions';
 class Login extends React.Component {
     constructor (props) {
         super(props);
-        this.login = this.props.login;
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this, this.props.login);
         this.state = {};
     }
     

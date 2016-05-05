@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { login } from '../actions/actions';
 
@@ -22,11 +22,11 @@ class Login extends React.Component {
         .then(() => {
             const loc = this.props.location;
             if (loc.state && loc.state.nextPathname) {
-                this.props.history.replace({
+                browserHistory.replace({
                     pathname: loc.state.nextPathname
                 });
             } else {
-                this.props.history.replace({
+                browserHistory.replace({
                     pathname: '/profile'
                 });
             }

@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
 
-//move this to axios configuration. use for refresh token.
+//move this to axios configuration. use for refresh token in the future.
 // axios.interceptors.response.use(() => {}, (err) => {
 //     console.log('err', err);
 // });
@@ -13,13 +13,18 @@ export const requestLogin = (credentials) => ({
    credentials 
 });
 
-export const loginSuccess = (profile) => ({
-   type: 'LOGIN_SUCCESS',
+export const requestRegister = (credentials) => ({
+  type: 'REGISTER_REQUEST',
+  credentials
+});
+
+export const authSuccess = (profile) => ({
+   type: 'AUTH_SUCCESS',
    profile
 });
 
-export const loginError = (message) => ({
-   type: 'LOGIN_ERROR',
+export const authError = (message) => ({
+   type: 'AUTH_ERROR',
    message
 });
 
@@ -58,21 +63,38 @@ export const achievementCreated = (achievement) => ({
     achievement
 });
 
+function onAuthSuccess (dispatch) {
+  return function ({data}) {
+    //when logged in it should add the Authentication header to requests
+    window.localStorage.setItem('token', data.token);
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+    dispatch(authSuccess(data.profile));  
+  }
+}
+
 export function login (credentials) {
-    return dispatch => {
-        dispatch(requestLogin(credentials));
-        return axios.post('http://localhost:3471/auth/login', credentials)
-            .then(({data}) => {
-                //when logged in it should add the Authentication header to requests
-                window.localStorage.setItem('token', data.token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-                dispatch(loginSuccess(data.profile));
-            })
-            .catch(({status, statusText, data}) => {
-                dispatch(loginError(`${status} (${statusText}): ${data}`));
-                throw data;
-            });
-    }
+  return dispatch => {
+    dispatch(requestLogin(credentials));
+    return axios.post('http://localhost:3471/auth/login', credentials)
+      .then(onAuthSuccess(dispatch))
+      .catch(({status, statusText, data}) => {
+        dispatch(authError(`${status} (${statusText}): ${data}`));
+        throw data;
+      });
+  }
+}
+
+export function register (credentials) {
+  return dispatch => {
+    dispatch(requestRegister(credentials));
+    //todo move the addresses to constants
+    return axios.post('http://localhost:3471/auth/register', credentials)
+      .then(onAuthSuccess(dispatch))
+      .catch(({status, statusText, data}) => {
+        dispatch(authError(`${status} (${statusText}): ${data}`));
+        throw data;
+      });
+  }
 }
 
 export function getUser () {
@@ -80,10 +102,10 @@ export function getUser () {
         return axios.get('http://localhost:3470/api/profile')
             .then(({data}) => {
                 console.log('got user');
-                dispatch(loginSuccess({email: data.email}));
+                dispatch(authSuccess({email: data.email}));
             })
             .catch(({status, statusText, data}) => {
-                dispatch(loginError(`${status} (${statusText}): ${data}`));
+                dispatch(authError(`${status} (${statusText}): ${data}`));
                 throw data;
             });
     }

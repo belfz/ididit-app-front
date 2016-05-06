@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import configureStore from '../store/configureStore';
 import App from '../containers/App';
 import Login from '../components/Login';
+import Register from '../components/Register';
 import Profile from '../components/Profile';
 import Achievements from '../components/Achievements';
 import NewAchievement from '../components/NewAchievement';
@@ -35,6 +36,7 @@ class Root extends React.Component {
                 <Route path="/" component={App}>
                     <IndexRoute component={Profile} onEnter={requireAuth.bind(null, getUser)}/>
                     <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
                     <Route path="/logout" onEnter={doLogout} />
                     <Route path="/profile" component={Profile} onEnter={requireAuth.bind(null, getUser)}/>
                     <Route path="/achievements" component={Achievements} onEnter={requireAuth.bind(null, getAchievements)} />

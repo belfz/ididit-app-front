@@ -8,11 +8,15 @@ class App extends React.Component {
     }
     
     render () {
+       //todo: conditionally (bases on user status) display login/logout
         return (
             <div>
                 <ul>
                     <li>
                         <Link to={'/logout'}>logout</Link>
+                    </li>
+                    <li>
+                        <Link to={'/register'}>register</Link>
                     </li>
                     <li>    
                         <Link to={'/achievements'}>achievements</Link>

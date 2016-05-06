@@ -34,6 +34,6 @@ export default connect(
         },
         updateAchievement (id, data) {
             dispatch(updateAchievement(id, data));
-        },
+        }
     })
 )(Achievements);

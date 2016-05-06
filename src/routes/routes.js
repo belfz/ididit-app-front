@@ -7,6 +7,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import Profile from '../components/Profile';
 import Achievements from '../components/Achievements';
+import AchievementDetails from '../components/AchievementDetails';
 import NewAchievement from '../components/NewAchievement';
 import { logout, getUser, getAchievements } from '../actions/actions';
 
@@ -41,6 +42,7 @@ class Root extends React.Component {
                     <Route path="/logout" onEnter={doLogout} />
                     <Route path="/profile" component={Profile} onEnter={requireAuth(getUser)}/>
                     <Route path="/achievements" component={Achievements} onEnter={requireAuth(getAchievements)} />
+                    <Route path="/achievements/:id" component={AchievementDetails} onEnter={requireAuth(getAchievements)} />
                     <Route path="/achievements/new" component={NewAchievement} onEnter={requireAuth(getAchievements)} />
                 </Route>
             </Router>        

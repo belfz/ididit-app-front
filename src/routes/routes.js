@@ -42,7 +42,7 @@ class Root extends React.Component {
                     <Route path="/logout" onEnter={doLogout} />
                     <Route path="/profile" component={Profile} onEnter={requireAuth(getUser)}/>
                     <Route path="/achievements" component={Achievements} onEnter={requireAuth(getAchievements)} />
-                    <Route path="/achievements/:id" component={AchievementDetails} onEnter={requireAuth(getAchievements)} />
+                    <Route path="/achievements/id/:id" component={AchievementDetails} onEnter={requireAuth(getAchievements)} />
                     <Route path="/achievements/new" component={NewAchievement} onEnter={requireAuth(getAchievements)} />
                 </Route>
             </Router>        

@@ -14,7 +14,7 @@ const AchievementsList = ({list, updateAchievement}) => {
               <button onClick={() => updateAchievement(a._id, {done: !a.done})}>
                 mark as {a.done ? 'undone': 'done'}
               </button>
-              <Link to={`/achievements/${a._id}`}>Show me!</Link>
+              <Link to={`/achievements/id/${a._id}`}>Show me!</Link>
             </div>    
           </li>
         );  

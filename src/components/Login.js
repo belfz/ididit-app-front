@@ -15,6 +15,8 @@ class Login extends React.Component {
           <form onSubmit={this.handleSubmit} noValidate>
             <input type="email" ref="email" placeholder="email" />
             <input type="password" ref="password" placeholder="password" />
+            <input type="checkbox" ref="refreshToken" defaultChecked />
+            <span>keep me logged in</span>
             <button type="submit">login</button>
             {this.state.error && <p>{this.state.error}</p>}
           </form>  

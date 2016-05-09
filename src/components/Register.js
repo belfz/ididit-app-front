@@ -69,6 +69,12 @@ class Register extends React.Component {
             <span>{this.state.errors.password ? 'passwords must match!' : ''}</span>
           </label>
         </div>
+        <div>
+          <label>
+            <span>keep me logged in after I register</span>
+            <input type="checkbox" ref="refreshToken" defaultChecked />
+          </label>
+        </div>
         <button type="submit" ref="registerBtn" disabled>register!</button>
         <pre>{JSON.stringify(this.state)}</pre>
       </form>

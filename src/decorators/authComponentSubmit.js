@@ -7,7 +7,8 @@ export default function authComponentSubmit (component) {
       
     authAction({
       email: this.refs.email.value,
-      password: this.refs.password.value
+      password: this.refs.password.value,
+      refreshToken: this.refs.refreshToken.checked
     })
     .then(() => {
       const loc = this.props.location;

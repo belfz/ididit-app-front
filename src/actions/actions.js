@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import { store } from '../routes/routes';
 
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
 
@@ -113,15 +114,21 @@ export function getUser () {
 
 export function getAchievements () {
     return dispatch => {
-        return axios.get('http://localhost:3470/api/achievements')
-            .then(({data}) => {
-                dispatch(achievementsFetchSuccess(data.achievements));
-            })
-            .catch(({status, statusText, data}) => {
-                // TODO create getAchievements error
-                // dispatch(loginError(`${status} (${statusText}): ${data}`));
-                throw data;
-            });
+      const achievementsState = store.getState().achievementsReducer;
+      if (achievementsState.achievements && achievementsState.achievements.length) {
+        //if the achievements were fetched already, do not ask for them again, but get the ones from the store
+        dispatch(achievementsFetchSuccess(achievementsState.achievements));
+        return Promise.resolve();
+      }
+      return axios.get('http://localhost:3470/api/achievements')
+        .then(({data}) => {
+          dispatch(achievementsFetchSuccess(data.achievements));
+        })
+        .catch(({status, statusText, data}) => {
+          // TODO create getAchievements error
+          // dispatch(loginError(`${status} (${statusText}): ${data}`));
+          throw data;
+        });
     }
 }
 

@@ -2,13 +2,6 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { store } from '../routes/routes';
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
-
-//move this to axios configuration. use for refresh token in the future.
-// axios.interceptors.response.use(() => {}, (err) => {
-//     console.log('err', err);
-// });
-
 export const requestLogin = (credentials) => ({
    type: 'LOGIN_REQUEST',
    credentials 
@@ -31,6 +24,7 @@ export const authError = (message) => ({
 
 export const logout = () => {
     window.localStorage.removeItem('token');
+    window.localStorage.removeItem('refreshToken');
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + '';
     return {
         type: 'LOGOUT'
@@ -69,6 +63,9 @@ function onAuthSuccess (dispatch) {
     //when logged in it should add the Authentication header to requests
     window.localStorage.setItem('token', data.token);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+    if (data.refreshToken) {
+      window.localStorage.setItem('refreshToken', data.refreshToken);
+    }
     dispatch(authSuccess(data.profile));  
   }
 }

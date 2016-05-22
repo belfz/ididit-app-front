@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { store } from '../routes/routes';
 
 export const requestLogin = (credentials) => ({
    type: 'LOGIN_REQUEST',
@@ -34,6 +33,11 @@ export const logout = () => {
 export const achievementsFetchSuccess = (achievements) => ({
     type: 'ACHIEVEMENTS_FETCH_SUCCESS',
     achievements
+});
+
+export const singleAchievementFetchSuccess = (singleAchievement) => ({
+    type: 'SINGLE_ACHIEVEMENT_FETCH_SUCCESS',
+    singleAchievement
 });
 
 export const achievementsShowDone = () => ({
@@ -110,23 +114,29 @@ export function getUser () {
 }
 
 export function getAchievements () {
-    return dispatch => {
-      const achievementsState = store.getState().achievementsReducer;
-      if (achievementsState.achievements && achievementsState.achievements.length) {
-        //if the achievements were fetched already, do not ask for them again, but get the ones from the store
-        dispatch(achievementsFetchSuccess(achievementsState.achievements));
-        return Promise.resolve();
-      }
-      return axios.get('http://localhost:3470/api/achievements')
-        .then(({data}) => {
-          dispatch(achievementsFetchSuccess(data.achievements));
-        })
-        .catch(({status, statusText, data}) => {
-          // TODO create getAchievements error
-          // dispatch(loginError(`${status} (${statusText}): ${data}`));
-          throw data;
-        });
-    }
+  return dispatch => {
+    return axios.get('http://localhost:3470/api/achievements')
+      .then(({data}) => {
+        dispatch(achievementsFetchSuccess(data.achievements));
+      })
+      .catch(({status, statusText, data}) => {
+        // TODO create getAchievements error
+        // dispatch(loginError(`${status} (${statusText}): ${data}`));
+        throw data;
+      });
+  };
+}
+
+export function getSingleAchievement ({id}) {
+  return dispatch => {
+    return axios.get(`http://localhost:3470/api/achievements/${id}`)
+      .then(({data}) => {
+        dispatch(singleAchievementFetchSuccess(data.achievement));
+      })
+      .catch(({status, statusText, data}) => {
+          return undefined;
+      });
+  };
 }
 
 export function updateAchievement (achievementId, updateData) {

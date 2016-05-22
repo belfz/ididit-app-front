@@ -9,13 +9,13 @@ import Profile from '../components/Profile';
 import Achievements from '../components/Achievements';
 import AchievementDetails from '../components/AchievementDetails';
 import NewAchievement from '../components/NewAchievement';
-import { logout, getUser, getAchievements } from '../actions/actions';
+import { logout, getUser, getAchievements, getSingleAchievement } from '../actions/actions';
 
 export const store = configureStore();
 
 function requireAuth (asyncAction) {
   return function (nextState, replace, done) {
-    store.dispatch(asyncAction())
+    store.dispatch(asyncAction(nextState.params)) //pass params to asyn action - may come in handy, ie. when fetching a given single achievement
       .then(() => done())
       .catch(() => {
         browserHistory.replace({
@@ -42,7 +42,7 @@ class Root extends React.Component {
                     <Route path="/logout" onEnter={doLogout} />
                     <Route path="/profile" component={Profile} onEnter={requireAuth(getUser)}/>
                     <Route path="/achievements" component={Achievements} onEnter={requireAuth(getAchievements)} />
-                    <Route path="/achievements/id/:id" component={AchievementDetails} onEnter={requireAuth(getAchievements)} />
+                    <Route path="/achievements/id/:id" component={AchievementDetails} onEnter={requireAuth(getSingleAchievement)} />
                     <Route path="/achievements/new" component={NewAchievement} onEnter={requireAuth(getAchievements)} />
                 </Route>
             </Router>        
@@ -54,5 +54,9 @@ class Root extends React.Component {
 //          \       \_____\update, timeline
 //           \
 //            \_unit
+
+// read achievement by id from api
+// remove credentials from state!
+// restore a logged in user into auth reducer (store) after page refresh
 
 export default Root;

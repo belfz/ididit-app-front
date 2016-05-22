@@ -6,22 +6,22 @@ class AchievementDetails extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      achievement: this.props.achievements.find(a => a._id === this.props.params.id)
+      singleAchievement: this.props.singleAchievement
     }
   }
   
   render () {
-    if (!this.state.achievement) {
+    if (!this.state.singleAchievement) {
       return <div>Achievement not found!</div>;
     }
     
     return (
       <div className="achievement-details">
-        <h3>{this.state.achievement.title}</h3>
-        <p>{this.state.achievement.content}</p>
-        <small>{this.state.achievement.done ? 'done' : 'undone'}</small>
-        <button onClick={() => this.props.updateAchievement(this.state.achievement._id, {done: !this.state.achievement.done})}>
-          mark as {this.state.achievement.done ? 'undone': 'done'}
+        <h3>{this.state.singleAchievement.title}</h3>
+        <p>{this.state.singleAchievement.content}</p>
+        <small>{this.state.singleAchievement.done ? 'done' : 'undone'}</small>
+        <button onClick={() => this.props.updateAchievement(this.state.singleAchievement._id, {done: !this.state.singleAchievement.done})}>
+          mark as {this.state.singleAchievement.done ? 'undone': 'done'}
         </button>
       </div>
     );
@@ -30,7 +30,7 @@ class AchievementDetails extends React.Component {
 
 export default connect (
   (state) => ({
-    achievements: state.achievementsReducer.achievements
+    singleAchievement: state.achievementsReducer.singleAchievement
   }),
   (dispatch) => ({
     updateAchievement (id, data) {

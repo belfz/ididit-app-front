@@ -4,6 +4,10 @@ const achievementsReducer = (state = {}, action) => {
             return Object.assign({}, state, {
                 achievements: action.achievements
             });
+        case 'SINGLE_ACHIEVEMENT_FETCH_SUCCESS':
+            return Object.assign({}, state, {
+                singleAchievement: action.singleAchievement
+            });
         case 'ACHIEVEMENTS_FILTER_SHOW_DONE':
             return Object.assign({}, state, {
                 done: true
@@ -26,7 +30,9 @@ const achievementsReducer = (state = {}, action) => {
         case 'ACHIEVEMENT_CREATED':
             return Object.assign({}, state, {
                 achievements: state.achievements.slice().push(action.achievement)
-            });                      
+            });
+        case 'LOGOUT':
+            return {}; //remove the achievements from memory on logout                          
         default:
             return state; 
     }

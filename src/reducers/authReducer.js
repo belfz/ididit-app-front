@@ -1,37 +1,39 @@
 const authReducer = (state = {
-    isFetching: false, 
-    profile: undefined
-    }, action) => {
+  isFetching: false,
+  profile: undefined,
+  isLoggedIn: false
+}, action) => {
   switch (action.type) {
     case 'LOGIN_REQUEST':
     case 'REGISTER_REQUEST':
       return Object.assign({}, state, {
-          isFetching: true,
-          credentials: action.credentials,
-          errorMessage: '',
-          profile: undefined
+        isFetching: true,
+        errorMessage: '',
+        profile: undefined,
+        isLoggedIn: false
       });
     case 'AUTH_SUCCESS':
       return Object.assign({}, state, {
-          isFetching: false,
-          isAuthenticated: true,
-          errorMessage: '',
-          profile: action.profile
+        isFetching: false,
+        errorMessage: '',
+        profile: action.profile,
+        isLoggedIn: true
       });
     case 'AUTH_ERROR':
       return Object.assign({}, state, {
-          isFetching: false,
-          isAuthenticated: false,
-          errorMessage: action.message,
-          profile: undefined
+        isFetching: false,
+        errorMessage: action.message,
+        profile: undefined,
+        isLoggedIn: false
       });
     case 'LOGOUT':
-        return Object.assign({}, state, {
-          isFetching: false,
-          isAuthenticated: false,
-          errorMessage: '',
-          profile: undefined  
-      });      
+      return Object.assign({}, state, {
+        isFetching: false,
+        credentials: undefined,
+        errorMessage: '',
+        profile: undefined,
+        isLoggedIn: false
+      });
     default:
       return state;
   }

@@ -9,7 +9,7 @@ describe('auth reducers', () => {
         });
        expect(nextState).toEqual({
            isFetching: true,
-           credentials: 'admin/admin',
+           isLoggedIn: false,
            errorMessage: '',
            profile: undefined
        });

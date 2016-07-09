@@ -29,7 +29,7 @@ const achievementsReducer = (state = {}, action) => {
             })});
         case 'ACHIEVEMENT_CREATED':
             return Object.assign({}, state, {
-                achievements: state.achievements.slice().push(action.achievement)
+                achievements: [...state.achievements, action.achievement]
             });
         case 'LOGOUT':
             return {}; //remove the achievements from memory on logout                          

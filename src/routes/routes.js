@@ -1,6 +1,7 @@
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import React from 'react';
 import { connect } from 'react-redux';
+import isLoggedIn from '../configurations/axiosConfiguration';
 import configureStore from '../store/configureStore';
 import App from '../containers/App';
 import Login from '../components/Login';
@@ -11,11 +12,13 @@ import AchievementDetails from '../components/AchievementDetails';
 import NewAchievement from '../components/NewAchievement';
 import { logout, getUser, getAchievements, getSingleAchievement } from '../actions/actions';
 
-export const store = configureStore();
+console.log(isLoggedIn);
+export const store = configureStore({authReducer: {isLoggedIn}});
 
 function requireAuth (asyncAction) {
   return function (nextState, replace, done) {
-    store.dispatch(asyncAction(nextState.params)) //pass params to asyn action - may come in handy, ie. when fetching a given single achievement
+    /* dispatch async action passing in route params */  
+    store.dispatch(asyncAction(nextState.params))
       .then(() => done())
       .catch(() => {
         browserHistory.replace({
@@ -55,7 +58,7 @@ class Root extends React.Component {
 //           \
 //            \_unit
 
-// read achievement by id from api
+
 // remove credentials from state!
 // restore a logged in user into auth reducer (store) after page refresh
 

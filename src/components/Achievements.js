@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {achievementsShowDone, achievementsShowUndone, achievementsShowAll, updateAchievement} from '../actions/actions';
+import {achievementsShowDone, achievementsShowUndone, achievementsShowAll} from '../actions/actions';
 import AchievementsList from './AchievementsList';
 
-const Achievements = ({dispatch, achievements, done, getAll, getDone, getUndone, updateAchievement}) => {
+const Achievements = ({dispatch, achievements, done, getAll, getDone, getUndone}) => {
     return (
         <div>
             <p>achievements - todo</p>
@@ -12,7 +12,7 @@ const Achievements = ({dispatch, achievements, done, getAll, getDone, getUndone,
             <button className={done === false ? 'ach-btn-active' : ''} onClick={getUndone}>show undone</button>
             <AchievementsList list={achievements.filter(a => {
                 return done === undefined ? true : a.done === done;
-            })} updateAchievement={updateAchievement} />
+            })} />
         </div>
     );
 };
@@ -31,9 +31,6 @@ export default connect(
         },
         getUndone () {
             dispatch(achievementsShowUndone());
-        },
-        updateAchievement (id, data) {
-            dispatch(updateAchievement(id, data));
         }
     })
 )(Achievements);

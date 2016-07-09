@@ -4,3 +4,4 @@ dist/*.js
 dist/*.map
 dist/*.json
 dist/*.css
+.vscode/

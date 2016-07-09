@@ -4,10 +4,9 @@ import { requestLogin, logout } from '../../src/actions/actions';
 
 describe('actions', () => {
    it('requestLogin should create a LOGIN_REQUEST action', function () {
-       expect(requestLogin({username: 'john@doe.com', password: 'meh123'}))
+       expect(requestLogin())
         .toEqual({
-            type: 'LOGIN_REQUEST',
-            credentials: {username: 'john@doe.com', password: 'meh123'}
+            type: 'LOGIN_REQUEST'
         });
    });
    

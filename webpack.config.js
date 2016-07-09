@@ -9,7 +9,7 @@ module.exports = {
     main: './src/main.js'
   }, 
   debug: true,
-  devtool: 'eval-source-map',
+  devtool: '#inline-source-map',
   output: {
     path: './dist',
     filename: 'bundle.min.js',

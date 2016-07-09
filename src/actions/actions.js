@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
-export const requestLogin = (credentials) => ({
-   type: 'LOGIN_REQUEST',
-   credentials 
+export const requestLogin = () => ({
+   type: 'LOGIN_REQUEST' 
 });
 
-export const requestRegister = (credentials) => ({
-  type: 'REGISTER_REQUEST',
-  credentials
+export const requestRegister = () => ({
+  type: 'REGISTER_REQUEST'
 });
 
 export const authSuccess = (profile) => ({
@@ -76,7 +74,7 @@ function onAuthSuccess (dispatch) {
 
 export function login (credentials) {
   return dispatch => {
-    dispatch(requestLogin(credentials));
+    dispatch(requestLogin());
     return axios.post('http://localhost:3471/auth/login', credentials)
       .then(onAuthSuccess(dispatch))
       .catch(({status, statusText, data}) => {
@@ -88,7 +86,7 @@ export function login (credentials) {
 
 export function register (credentials) {
   return dispatch => {
-    dispatch(requestRegister(credentials));
+    dispatch(requestRegister());
     //todo move the addresses to constants
     return axios.post('http://localhost:3471/auth/register', credentials)
       .then(onAuthSuccess(dispatch))
